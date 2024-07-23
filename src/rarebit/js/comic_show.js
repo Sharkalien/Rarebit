@@ -204,3 +204,21 @@ function keyNav() {
     window.scrollBy({ top: 30 });
   }
 });};
+
+// Prevent navigation between pages if there's anything typed in an input
+document.addEventListener("DOMContentLoaded", () => {
+  let preventNavigateAway = false;
+  // Listen for if user types in any inputs
+  Array.from(document.querySelectorAll('input, textarea')).forEach((input) => {
+    input.addEventListener('input', (e) => {
+      preventNavigateAway = (e.target.value != '');
+    })
+  })
+  // Listen for if user navigates away from the page, and if preventNavigateAway is true, ask them if they really want to
+  window.addEventListener("beforeunload", (e) => {
+    if (preventNavigateAway) {
+      e.preventDefault() // Causes the confirm message to appear
+      e.returnValue = true; // This makes it work in very old browsers
+    }
+  })  
+})

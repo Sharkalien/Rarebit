@@ -1,3 +1,4 @@
+{
 //comic_settings.js was created by geno7, with much needed assistance from Dannarchy
 
 //this is the main file you'll be messing with to manage and update your comic. most (not all) of the main toggle-able settings are here.
@@ -131,3 +132,20 @@ function writeDate(year,month,day) { //write date of comic page
     .slice(4) //remove the Day
     return date
 }
+
+// Here we copy these variables to window (the global object) so that other files can access them guaranteed, even on archive.org which modifies our code slightly in a way that breaks implicit global variable sharing
+window.pg = pg
+window.maxpg = maxpg
+window.folder = folder
+window.image = image
+window.imgPart = imgPart
+window.ext = ext
+window.thumbFolder = thumbFolder
+window.thumbExt = thumbExt
+window.thumbDefault = thumbDefault
+window.navText = navText
+window.navFolder = navFolder
+window.navExt = navExt
+window.navScrollTo = navScrollTo
+window.pgData = pgData
+} // We include this set of curly braces to ensure that global variables are set properly, since archive.org will do this to our code anyway, and we don't want it to break on archive.org because that would be sad.

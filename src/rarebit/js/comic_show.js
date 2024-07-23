@@ -190,6 +190,7 @@ function writeNav(imageToggle) {
 //KEYBOARD NAVIGATION
 function keyNav() {
   document.addEventListener("keydown", (e) => {
+  if (['TEXTAREA', 'INPUT'].includes(document.activeElement.tagName)) return; // Don't do keyboard navigation if the user is typing in an input right now
   if ((e.key == 'ArrowRight' || e.key.toLowerCase() == 'd') && pg < maxpg) { //right arrow or D goes to next page
     window.location.href = "?pg=" + (pg + 1) + navScrollTo;
   } else if ((e.key == "ArrowLeft" || e.key.toLowerCase() == "a") && pg > 1) { //left arrow or A goes to previous page

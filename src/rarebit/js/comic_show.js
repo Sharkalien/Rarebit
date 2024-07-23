@@ -11,7 +11,10 @@
 writeNav(true); //show navigation for comic pages. to toggle either images or text for nav, set this to true or false.
 
 //debug
-console.log(pg)
+console.log("Current page:", pg)
+if (!pgData[pg-1]) {
+  console.error(`Missing pgData entry for page ${pg} (pgData only has ${pgData.length} items which is ${pg - pgData.length} too few)`)
+}
 
 writePageTitle(".writePageTitle", true, " - "); //write title of page. true/false
 
@@ -39,17 +42,17 @@ function writePageClickable(div,clickable) {
 function writePageTitle(div,toggleNum, char) {
   if (pgData.length >= pg) {
     //display title of current page
-    document.querySelector(div).innerHTML = `<h1>${pgData[pg - 1].title}</h1>`;
+    document.querySelector(div).innerHTML = `<h1>${pgData[pg - 1]?.title}</h1>`;
     if (toggleNum) {
         //toggle whether you want to display the page number
-        document.querySelector(div).innerHTML = `<h1>${pgData[pg - 1].pgNum + char + pgData[pg - 1].title}</h1>`; //char denotes a separating character between the number and the title
+        document.querySelector(div).innerHTML = `<h1>${pgData[pg - 1]?.pgNum + char + pgData[pg - 1]?.title}</h1>`; //char denotes a separating character between the number and the title
     }
   }
 }
 
 function writeAuthorNotes(div) { //display author notes
   if (pgData.length >= pg) {
-    return document.querySelector(div).innerHTML = `${pgData[pg-1].authorNotes}`
+    return document.querySelector(div).innerHTML = `${pgData[pg-1]?.authorNotes}`
   }
 }
 
@@ -69,10 +72,10 @@ function writePage() {
     return page;
   } else if (pgData.length >= pg) { //if the array is not blank, and if its at least long enough to have an entry for the current page
 
-    altText = pgData[pg - 1].altText; //set alt text to the text defined in the array
+    altText = pgData[pg - 1]?.altText; //set alt text to the text defined in the array
 
-    if (pgData[pg-1].imageFiles > 1) { //if theres more than one page segment
-    for (let i = 1; i < pgData[pg-1].imageFiles+1; i++) { //for loop to put all the parts of the image on the webpage
+    if (pgData[pg-1]?.imageFiles > 1) { //if theres more than one page segment
+    for (let i = 1; i < pgData[pg-1]?.imageFiles+1; i++) { //for loop to put all the parts of the image on the webpage
       partExtension = imgPart + i.toString();
       path = (folder != "" ? folder + "/" : "") + image + pg + partExtension + "." + ext; //reinit path (there has to be a less dumb way to do this)
       if (i > 1) {page += `<br/>`} //add line break
@@ -93,8 +96,8 @@ function writePage() {
 console.log("array blank/not long enough? " + (pgData.length < pg));
 console.log("array length - " + pgData.length);
 console.log("current page - " + pg);
-console.log("number of page segments - " + pgData[pg-1].imageFiles);
-console.log("alt text - " + `"` + pgData[pg - 1].altText + `"`);
+console.log("number of page segments - " + pgData[pg-1]?.imageFiles);
+console.log("alt text - " + `"` + pgData[pg - 1]?.altText + `"`);
 
 console.log("nav text - " + navText);
 console.log("nav image file extension - " + navExt);

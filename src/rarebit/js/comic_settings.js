@@ -108,9 +108,9 @@ const pgData = [
     },
 ];
 
-const maxpg = pgData.length; //the current number of pages your comic has in total. this DOESNT necessarily mean number of IMAGE FILES as it doesn't count pages split into multiple files.
+const pgCount = pgData.length; //the current number of pages your comic has in total. this DOESNT necessarily mean number of IMAGE FILES as it doesn't count pages split into multiple files.
 
-if (pg == 0) {pg = maxpg;} //display MOST RECENT COMIC when the webpage is loaded. if you want to instead have the FIRST COMIC displayed first, change maxpg to 1.
+if (pg == 0) {pg = pgCount;} //display MOST RECENT COMIC when the webpage is loaded. if you want to instead have the FIRST COMIC displayed first, change pgCount to 1.
 
 //below is a function you dont rly need to mess with but if you're more experienced with js you can
 
@@ -135,7 +135,7 @@ function writeDate(year,month,day) { //write date of comic page
 
 // Here we copy these variables to window (the global object) so that other files can access them guaranteed, even on archive.org which modifies our code slightly in a way that breaks implicit global variable sharing
 window.pg = pg
-window.maxpg = maxpg
+window.pgCount = pgCount
 window.folder = folder
 window.image = image
 window.imgPart = imgPart

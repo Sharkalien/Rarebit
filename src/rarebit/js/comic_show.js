@@ -13,7 +13,7 @@ writeNav(true); //show navigation for comic pages. to toggle either images or te
 //debug
 console.log("Current page:", pg)
 if (!pgData[pg-1]) {
-  console.error(`Missing pgData entry for page ${pg} (pgData only has ${pgData.length} items which is ${pg - pgData.length} too few)`)
+  console.error(`Missing pgData entry for page ${pg} (pgData only has ${pgCount} items which is ${pg - pgCount} too few)`)
 }
 
 writePageTitle(".writePageTitle", true, " - "); //write title of page. true/false
@@ -31,7 +31,7 @@ keyNav(); //enables navigation through the comic with the arrow keys and WSAD. I
 function writePageClickable(div,clickable) {
     if (!clickable) {
         document.querySelector(div).innerHTML = `<div class="comicPage">${writePage()}</div>`; //display comic page without link
-    } else if (pg < maxpg) {
+    } else if (pg < pgCount) {
         //check whether comic is on the last page
         document.querySelector(div).innerHTML = `<div class="comicPage"><a href="?pg=${pg + 1}${navScrollTo}"/>${writePage()}</a></div>`; //display comic page and make it so that clicking it will lead you to the next page
     } else {
@@ -40,7 +40,7 @@ function writePageClickable(div,clickable) {
 }
 
 function writePageTitle(div,toggleNum, char) {
-  if (pgData.length >= pg) {
+  if (pgCount >= pg) {
     //display title of current page
     document.querySelector(div).innerHTML = `<h1>${pgData[pg - 1]?.title}</h1>`;
     if (toggleNum) {
@@ -51,7 +51,7 @@ function writePageTitle(div,toggleNum, char) {
 }
 
 function writeAuthorNotes(div) { //display author notes
-  if (pgData.length >= pg) {
+  if (pgCount >= pg) {
     return document.querySelector(div).innerHTML = `${pgData[pg-1]?.authorNotes}`
   }
 }
@@ -63,14 +63,14 @@ function writePage() {
   let path = (folder != "" ? folder + "/" : "") + image + pg + partExtension + "." + ext; //path for your comics made out of variables strung together
   let page = ``;
 
-  if (pgData.length < pg) { //if the array is blank or not long enough to have an entry for this page
+  if (pgCount < pg) { //if the array is blank or not long enough to have an entry for this page
     //debug
     console.log("page code to insert - " + page);
     console.log("alt text to print - " + altText);
     //
     page = `<img alt="` + altText + `" title="` + altText + `" src="` + path + `" />`;
     return page;
-  } else if (pgData.length >= pg) { //if the array is not blank, and if its at least long enough to have an entry for the current page
+  } else if (pgCount >= pg) { //if the array is not blank, and if its at least long enough to have an entry for the current page
 
     altText = pgData[pg - 1]?.altText; //set alt text to the text defined in the array
 
@@ -93,8 +93,8 @@ function writePage() {
 }
 
 //debug
-console.log("array blank/not long enough? " + (pgData.length < pg));
-console.log("array length - " + pgData.length);
+console.log("array blank/not long enough? " + (pgCount < pg));
+console.log("array length - " + pgCount);
 console.log("current page - " + pg);
 console.log("number of page segments - " + pgData[pg-1]?.imageFiles);
 console.log("alt text - " + `"` + pgData[pg - 1]?.altText + `"`);
@@ -163,7 +163,7 @@ function writeNav(imageToggle) {
 
     function nextButton() {
         //NEXT BUTTON
-        if (pg < maxpg) {
+        if (pg < pgCount) {
             //only make active if not on the last page
             return `<a href="?pg=` + (pg + 1) + navScrollTo + `"/>` + imgOrText(imageToggle, 2) + `</a>`;
         } else {
@@ -177,9 +177,9 @@ function writeNav(imageToggle) {
 
     function lastButton() {
         //LAST BUTTON
-        if (pg < maxpg) {
+        if (pg < pgCount) {
             //only make active if not on last page
-            return `<a href="?pg=` + maxpg + navScrollTo + `"/>` + imgOrText(imageToggle, 3) + `</a>`;
+            return `<a href="?pg=` + pgCount + navScrollTo + `"/>` + imgOrText(imageToggle, 3) + `</a>`;
         } else {
             if (!imageToggle) {
                 return imgOrText(imageToggle, 3);
@@ -194,7 +194,7 @@ function writeNav(imageToggle) {
 function keyNav() {
   document.addEventListener("keydown", (e) => {
   if (['TEXTAREA', 'INPUT'].includes(document.activeElement.tagName)) return; // Don't do keyboard navigation if the user is typing in an input right now
-  if ((e.key == 'ArrowRight' || e.key.toLowerCase() == 'd') && pg < maxpg) { //right arrow or D goes to next page
+  if ((e.key == 'ArrowRight' || e.key.toLowerCase() == 'd') && pg < pgCount) { //right arrow or D goes to next page
     window.location.href = "?pg=" + (pg + 1) + navScrollTo;
   } else if ((e.key == "ArrowLeft" || e.key.toLowerCase() == "a") && pg > 1) { //left arrow or A goes to previous page
     window.location.href = "?pg=" + (pg - 1) + navScrollTo;

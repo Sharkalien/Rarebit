@@ -16,8 +16,6 @@ let pg = Number(findGetParameter("pg")); //make "pg" mean the current page numbe
 // COMIC PAGE SETTINGS
 const folder = "img/comics"; //directory of the folder where you keep all the comics
 const image = "pg"; //what you'll name all your comic pages
-const imgPart = "_" //special character(s) you put after the page number to subdivide pages into multiple image files (ie pg2_1, pg2_2, etc)
-const ext = "jpg"; //file extension of your comic pages
 
 //THUMBNAIL SETTINGS
 const thumbFolder = "img/thumbs" //directory of the folder where you keep all the thumbnail images for the comics, in case you want the archive page to use thumbnails.
@@ -37,7 +35,7 @@ const navScrollTo = "#showComic"; //id of the div you want the page to automatic
         title: "",
         date: writeDate([YEAR],[MONTH],[DAY]),
         altText: "",
-        imageFiles: "",
+        imageFiles: [""],
         authorNotes: ``
     },
 */
@@ -49,7 +47,7 @@ const pgData = [
         title: "The First Page Title", //the title of the page (leaving this blank will default it to "Page X")
         date: writeDate(2021, 3, 16), //the date on which the page was posted (mainly for the archive). The date is written using a function called "writeDate", basically just put writeDate and then some parenthesis and, comma separated, the year followed by the month and the day. Don't forget another comma at the end outside the parenthesis!
         altText: "Here's some alt text!", //the alt text (mouse over text) for this particular comic. put nothing inbetween the quotes for no alt text
-        imageFiles: 1, //how many image files this page is split into
+        imageFiles: ["pg1.jpg"], //the image filename(s). if there are multiple, separate them with commas
         authorNotes: `
             <p>If you want to write an author notes section, this'd be the place to do it.</p>
             <p>You can even use whatever html tags you want in here to format it, the script called on your html page should spit out anything you type between these backticks.</p>
@@ -60,7 +58,7 @@ const pgData = [
         title: "The Second Page Title",
         date: writeDate(2021, 3, 17),
         altText: "Here's some more alt text!",
-        imageFiles: 2,
+        imageFiles: ["pg2_1.jpg","pg2_2.jpg"],
         authorNotes: `
             <p>You can have different author notes for every page.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vulputate, orci sit amet dignissim eleifend, magna felis malesuada nunc, ut sagittis purus mi ac urna. Fusce ligula urna, varius vel sapien sit amet, vulputate tempor felis. In hac habitasse platea dictumst. Aliquam laoreet volutpat interdum. Vestibulum non libero sit amet leo accumsan porttitor. Vivamus nec porttitor neque. Sed eget mauris quam.</p>
@@ -71,7 +69,7 @@ const pgData = [
         title: "The Third Page Title",
         date: writeDate(2021, 3, 18),
         altText: "Here's even more alt text!",
-        imageFiles: 1,
+        imageFiles: ["pg3.jpg"],
         authorNotes: `
             <p>Sed lectus magna, dignissim eu sapien quis, euismod pulvinar diam. In odio massa, auctor blandit dolor id, varius ultricies lacus. Suspendisse sed libero vel leo dictum consectetur. In fringilla elit sit amet placerat varius. Duis vel lacus ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla facilisi. Proin eleifend metus eu ex elementum venenatis. Curabitur sodales, ipsum placerat ornare convallis, sem eros convallis felis, vel efficitur erat ante id diam.</p>
             `,
@@ -81,7 +79,7 @@ const pgData = [
         title: "Even If The Title of a Page Is Really Long, It'll Wrap",
         date: writeDate(2021, 3, 19),
         altText: "So much alt text...",
-        imageFiles: 1,
+        imageFiles: ["pg4.jpg"],
         authorNotes: `
             <p>Sed lectus magna, dignissim eu sapien quis, euismod pulvinar diam. In odio massa, auctor blandit dolor id, varius ultricies lacus. Suspendisse sed libero vel leo dictum consectetur. In fringilla elit sit amet placerat varius. Duis vel lacus ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla facilisi. Proin eleifend metus eu ex elementum venenatis. Curabitur sodales, ipsum placerat ornare convallis, sem eros convallis felis, vel efficitur erat ante id diam.</p>
             `,
@@ -91,7 +89,7 @@ const pgData = [
         title: "Also if you don't feel like coming up with a title for every page, you don't have to.",
         date: writeDate(2021, 3, 20),
         altText: "Here's even more alt text!",
-        imageFiles: 1,
+        imageFiles: ["pg5.jpg"],
         authorNotes: `
             <p>Sed lectus magna, dignissim eu sapien quis, euismod pulvinar diam. In odio massa, auctor blandit dolor id, varius ultricies lacus. Suspendisse sed libero vel leo dictum consectetur. In fringilla elit sit amet placerat varius. Duis vel lacus ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla facilisi. Proin eleifend metus eu ex elementum venenatis. Curabitur sodales, ipsum placerat ornare convallis, sem eros convallis felis, vel efficitur erat ante id diam.</p>
             `,
@@ -101,7 +99,7 @@ const pgData = [
         title: `Unnamed pages won't display a title, and they'll show up as "Page [X]" when listed in the archive`,
         date: writeDate(2021, 3, 21),
         altText: "Here's even more alt text!",
-        imageFiles: 1,
+        imageFiles: ["pg6.jpg"],
         authorNotes: `
             <p>Sed lectus magna, dignissim eu sapien quis, euismod pulvinar diam. In odio massa, auctor blandit dolor id, varius ultricies lacus. Suspendisse sed libero vel leo dictum consectetur. In fringilla elit sit amet placerat varius. Duis vel lacus ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla facilisi. Proin eleifend metus eu ex elementum venenatis. Curabitur sodales, ipsum placerat ornare convallis, sem eros convallis felis, vel efficitur erat ante id diam.</p>
             `,
@@ -138,8 +136,6 @@ window.pg = pg
 window.pgCount = pgCount
 window.folder = folder
 window.image = image
-window.imgPart = imgPart
-window.ext = ext
 window.thumbFolder = thumbFolder
 window.thumbExt = thumbExt
 window.thumbDefault = thumbDefault

@@ -58,26 +58,21 @@ function writeAuthorNotes(div) { //display author notes
 
 //function used to split pages into multiple images if needed, and add alt text
 function writePage() {
-  let partExtension = ""; //part extension to add to the url if the image is split into multiple parts
   let altText = ""; //variable for alt text
-  let path = (folder != "" ? folder + "/" : "") + image + pg + partExtension + "." + ext; //path for your comics made out of variables strung together
+  let path = ""; //path for your comic's images
   let page = ``;
 
   if (pgCount < pg) { //if the array is blank or not long enough to have an entry for this page
     //debug
-    console.log("page code to insert - " + page);
-    console.log("alt text to print - " + altText);
-    //
-    page = `<img alt="` + altText + `" title="` + altText + `" src="` + path + `" />`;
+    console.log("NO PAGE DATA FOUND");
     return page;
   } else if (pgCount >= pg) { //if the array is not blank, and if its at least long enough to have an entry for the current page
 
     altText = pgData[pg - 1]?.altText; //set alt text to the text defined in the array
 
-    if (pgData[pg-1]?.imageFiles > 1) { //if theres more than one page segment
-    for (let i = 1; i < pgData[pg-1]?.imageFiles+1; i++) { //for loop to put all the parts of the image on the webpage
-      partExtension = imgPart + i.toString();
-      path = (folder != "" ? folder + "/" : "") + image + pg + partExtension + "." + ext; //reinit path (there has to be a less dumb way to do this)
+    if (pgData[pg-1]?.imageFiles.length > 0) { //if theres any images
+    for (let i = 0; i < pgData[pg-1]?.imageFiles.length; i++) { //for loop to put all the parts of the image on the webpage
+      path = (folder != "" ? folder + "/" : "") + pgData[pg-1]?.imageFiles[i];
       if (i > 1) {page += `<br/>`} //add line break
       page += `<img alt="` + altText + `" title="` + altText + `" src="` + path + `" />`; //add page segment
       }

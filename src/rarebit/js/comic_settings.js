@@ -115,7 +115,8 @@ if (pg == 0) {pg = pgCount;} //display MOST RECENT COMIC when the webpage is loa
 function findGetParameter(parameterName) { //function used to write a parameter to append to the url, to give each comic page its own unique url
     let result = null,
     tmp = []; 
-    let items = location.search.substr(1).split("&");
+    let items = location.search.substring(1).split("&");
+    console.log(items)
     for (let index = 0; index < items.length; index++) {
         tmp = items[index].split("=");
         if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
